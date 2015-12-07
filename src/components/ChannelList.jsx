@@ -5,18 +5,12 @@ import mui, {Card, List } from 'material-ui'
 export default class ChannelList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            channels: [
-                "Channel 1",
-                "Channel 2",
-                "Channel 3"
-            ]
-        }
     }
+
     render() {
-        var channelNodes = this.state.channels.map((channel) => {
+        var channelNodes = this.props.rooms.map((room) => {
             return (
-                <Channel channel={channel} />
+                <Channel channel={room} setRoom={this.props.setRoom}/>
             );
         });
         return (

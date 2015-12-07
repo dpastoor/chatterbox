@@ -5,9 +5,13 @@ export default class Channel extends React.Component {
     constructor(props) {
         super(props);
     }
+
+    _handleClick(room) {
+        this.props.setRoom(room);
+    }
     render() {
         return (
-            <ListItem style={{background: 'blue'}}>
+            <ListItem onClick={this._handleClick.bind(this, this.props.channel)}>
                  {this.props.channel}
             </ListItem>
         )
