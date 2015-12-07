@@ -7,7 +7,9 @@ export default class MessageList extends React.Component {
         super(props);
     }
     render() {
-        var messageNodes = this.props.roomData.map((message, i) => {
+        var lastMessages = _.take(this.props.roomData, 10).reverse()
+        console.log(lastMessages)
+        var messageNodes = lastMessages.map((message, i) => {
             return (
                 <Message message={message} key={i} />
             );
