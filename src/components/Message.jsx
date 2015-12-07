@@ -1,6 +1,6 @@
 import React from 'react';
 import mui, {ListItem, Avatar} from 'material-ui'
-
+import * as keys from '../key.config'
 export default class Message extends React.Component {
     constructor(props) {
         super(props);

@@ -8,7 +8,8 @@ export default class ChannelList extends React.Component {
         this.state = {
             channels: [
                 "Channel 1",
-                "Channel 2"
+                "Channel 2",
+                "Channel 3"
             ]
         }
     }

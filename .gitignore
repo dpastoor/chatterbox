@@ -6,3 +6,7 @@ dist
 src/components/*-compiled.*
 src/*-compiled.*
 *-compiled.*
+
+
+## where we store keys
+src/key.config.js

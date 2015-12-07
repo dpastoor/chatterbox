@@ -20,7 +20,7 @@ export default class MessageList extends React.Component {
         });
         return (
             <Card style={{
-            flexGrow: 2,
+            flexGrow: 4,
             marginLeft: 30
             }}>
                 <List>
