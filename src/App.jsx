@@ -18,7 +18,8 @@ export default class App extends React.Component {
       this.state = {rawData: [],
           rooms: [],
           roomData: [],
-          currentRoom: ""
+          currentRoom: "",
+          userName: ""
       }
   }
 
@@ -34,7 +35,7 @@ export default class App extends React.Component {
     };
   }
   _getRooms(dataArray) {
-      var rooms = _.uniq(_.map(dataArray, (m) => m.roomname))
+      var rooms = _.uniq(_.map(dataArray, (m) => m.roomname)).sort()
       console.log('unique rooms: ' + JSON.stringify(rooms))
       this.setState({rooms: rooms})
 
@@ -64,12 +65,12 @@ export default class App extends React.Component {
 
   _filterMessages(room) {
       let rawData = this.state.rawData;
-      let roomData = rawData.filter((d) => d.roomname === room)
+      let roomData = rawData.filter((d) => d.roomname === room);
       this.setState({roomData: roomData})
   }
   componentWillMount() {
       this._getAllMessages()
-     //setInterval(() => this._getAllMessages(), 1000)
+     //setInterval(() => this._getAllMessages(), 10000)
   }
 
   _setCurrentRoom(roomName) {
@@ -85,10 +86,11 @@ export default class App extends React.Component {
   }
 
   render() {
+
     return (
         <div>
 
-            <AppBar title="Awesome Chat App"></AppBar>
+            <AppBar title={"Welcome to chatterbox " + this.state.userName + "!"}> </AppBar>
             <div style={{
                 display: 'flex',
                 flexFlow: 'row wrap',
@@ -99,7 +101,7 @@ export default class App extends React.Component {
                 <ChannelList rooms={this.state.rooms} setRoom={this._setCurrentRoom.bind(this)} />
                 <MessageList roomData={this.state.roomData} > </MessageList>
             </div>
-            <MessageBox />
+            <MessageBox room={this.state.currentRoom} user={this.state.userName} />
         </div>
     );
   }

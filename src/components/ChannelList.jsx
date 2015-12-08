@@ -18,6 +18,13 @@ export default class ChannelList extends React.Component {
                 flexGrow: 1
             }}>
                 <List>
+                       <div style={{
+                    color: 'black',
+                    fontSize: 20,
+                    textAlign: 'center'
+                       }}>
+                           Channel List
+                       </div>
                     {channelNodes}
                 </List>
             </Card>

@@ -21,6 +21,13 @@ export default class MessageList extends React.Component {
             marginLeft: 30
             }}>
                 <List>
+                    <div style={{
+                    color: 'black',
+                    fontSize: 20,
+                    textAlign: 'center'
+                       }}>
+                        Messages
+                    </div>
                     {messageNodes}
                 </List>
             </Card>
