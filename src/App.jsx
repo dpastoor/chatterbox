@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery'
 import _ from 'lodash'
 import './css/styles.css'
-import mui, {AppBar, Styles} from 'material-ui'
+import mui, {AppBar, Styles, TextField} from 'material-ui'
 import MessageList from './components/MessageList.jsx'
 import ChannelList from './components/ChannelList.jsx'
 import MessageBox from './components/MessageBox.jsx'
@@ -18,7 +18,6 @@ export default class App extends React.Component {
       this.state = {rawData: [],
           rooms: [],
           roomData: [],
-          currentRoom: "",
           userName: ""
       }
   }
@@ -52,9 +51,12 @@ export default class App extends React.Component {
           contentType: 'application/json',
           success: function (data) {
              // console.log(data)
-              let rooms = this._getRooms(data.results);
+              this._getRooms(data.results);
              // console.log(rooms)
               this.setState({rawData: data});
+              if (this.state.hasOwnProperty('currentRoom') {
+                  this._filterMessages(this.state.currentRoom);
+              })
           }.bind(this),
           error: function (data) {
               // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -63,47 +65,79 @@ export default class App extends React.Component {
       });
   }
 
-  _filterMessages(room) {
+  _filterMessages(roomName) {
       let rawData = this.state.rawData;
-      let roomData = rawData.filter((d) => d.roomname === room);
-      this.setState({roomData: roomData})
-  }
-  componentWillMount() {
-      this._getAllMessages()
-     //setInterval(() => this._getAllMessages(), 10000)
-  }
-
-  _setCurrentRoom(roomName) {
       let roomData = _.filter(this.state.rawData.results, (d) => {
           //console.log(d);
           //console.log(d.roomname + ' ===' + roomName);
           return d.roomname === roomName
       });
+      this.setState({roomData: roomData})
+  }
+  componentWillMount() {
+      this._getAllMessages()
+      setInterval(() => {
+          this._getAllMessages()
+      }, 5000
+      })
+  }
+
+  _setCurrentRoom(roomName) {
     this.setState({
-        currentRoom: roomName,
-        roomData: roomData
-    })
+        currentRoom: roomName
+    });
+    this._filterMessages(roomName);
+  }
+  _setUser(e) {
+      this.setState({
+          userName: e.target.value
+      });
+      e.target.value = ""
   }
 
   render() {
+        return (
+            <div>
 
-    return (
-        <div>
+                <AppBar title={"Welcome to chatterbox " + this.state.userName + "!"}> </AppBar>
+                {
+                    (this.state.userName === "") ?
+                <TextField
+                    hintText="Who are you?"
+                    style={{
+                    width: '100%',
+                    height: '100%',
+                    borderColor: '#D0D0D0',
+                    resize: 'none',
+                    borderRadius: 3,
+                    minHeight: 50,
+                    color: '#555',
+                    fontSize: 70,
+                    // to prevent the textarea from being
+                    // highlighted while you type
+                    outline: 'auto 0px'
+                }}
+                    onEnterKeyDown={this._setUser.bind(this)}
+                /> :
 
-            <AppBar title={"Welcome to chatterbox " + this.state.userName + "!"}> </AppBar>
-            <div style={{
+                <div style={{
                 display: 'flex',
                 flexFlow: 'row wrap',
                 maxWidth: 1200,
                 width: '100%',
                 margin: '30px auto 30px'
                 }}>
-                <ChannelList rooms={this.state.rooms} setRoom={this._setCurrentRoom.bind(this)} />
-                <MessageList roomData={this.state.roomData} > </MessageList>
+                    <ChannelList rooms={this.state.rooms} setRoom={this._setCurrentRoom.bind(this)} />
+                    <MessageList roomData={this.state.roomData} > </MessageList>
+                </div>
+                    }
+                { (this.state.currentRoom) ?
+
+                <MessageBox room={this.state.currentRoom} user={this.state.userName} /> : null
+
+                    }
             </div>
-            <MessageBox room={this.state.currentRoom} user={this.state.userName} />
-        </div>
-    );
+        );
   }
 }
 

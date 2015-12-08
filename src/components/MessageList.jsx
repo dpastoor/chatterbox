@@ -8,13 +8,13 @@ export default class MessageList extends React.Component {
     }
     render() {
         var lastMessages = _.take(this.props.roomData, 10).reverse()
+        console.log('last messages: ')
         console.log(lastMessages)
         var messageNodes = lastMessages.map((message, i) => {
             return (
-                <Message message={message} key={i} />
+                <Message message={message} key={message.objectId} />
             );
         });
-
         return (
             <Card style={{
             flexGrow: 4,

@@ -7,11 +7,11 @@ export default class MessageBox extends React.Component {
         super(props);
     }
     _onSubmit(event) {
-        let messageText = event.target.value
+        let messageText = event.target.value;
         let message = {
             text: messageText,
-            username: "devin",
-           roomname: "hovel"
+            username: this.props.user,
+           roomname: this.props.room
         };
         $.ajax({
             // This is the url you should use to communicate with the parse API server.
@@ -42,7 +42,7 @@ export default class MessageBox extends React.Component {
             padding: 30
             }}>
                 <TextField
-                       defaultValue="type your message here"
+                       hintText="type your message here"
                        style={{
                     width: '100%',
                     borderColor: '#D0D0D0',
