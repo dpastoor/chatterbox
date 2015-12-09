@@ -39,6 +39,7 @@ export default class App extends React.Component {
       this.setState({rooms: rooms})
 
   }
+
   _getAllMessages() {
       $.ajax({
           // This is the url you should use to communicate with the parse API server.
@@ -48,15 +49,17 @@ export default class App extends React.Component {
               jqXHR.setRequestHeader("X-Parse-Application-Id", keys.PARSE_APP_ID);
               jqXHR.setRequestHeader("X-Parse-REST-API-Key", keys.PARSE_API_ID);
           },
+          data: 'limit=200',
           contentType: 'application/json',
           success: function (data) {
              // console.log(data)
               this._getRooms(data.results);
+              console.log(data.results);
              // console.log(rooms)
               this.setState({rawData: data});
-              if (this.state.hasOwnProperty('currentRoom') {
+              if (this.state.hasOwnProperty('currentRoom')) {
                   this._filterMessages(this.state.currentRoom);
-              })
+              }
           }.bind(this),
           error: function (data) {
               // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -76,10 +79,10 @@ export default class App extends React.Component {
   }
   componentWillMount() {
       this._getAllMessages()
+
       setInterval(() => {
           this._getAllMessages()
-      }, 5000
-      })
+      },5000)
   }
 
   _setCurrentRoom(roomName) {
@@ -122,8 +125,9 @@ export default class App extends React.Component {
 
                 <div style={{
                 display: 'flex',
-                flexFlow: 'row wrap',
+                flexFlow: 'row no-wrap',
                 maxWidth: 1200,
+                maxHeight: '500',
                 width: '100%',
                 margin: '30px auto 30px'
                 }}>

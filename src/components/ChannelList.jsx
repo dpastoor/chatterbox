@@ -15,7 +15,9 @@ export default class ChannelList extends React.Component {
         });
         return (
             <Card style={{
-                flexGrow: 1
+                flexGrow: 1,
+                minWidth: '33vw',
+                overflowY: 'auto'
             }}>
                 <List>
                        <div style={{

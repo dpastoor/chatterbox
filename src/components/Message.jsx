@@ -7,11 +7,16 @@ export default class Message extends React.Component {
     }
     render() {
         return (
-            <ListItem
-                //leftAvatar={<Avatar src="https://avatars1.githubusercontent.com/u/3196313?v=3&s=460" />}
-            >
-                {this.props.message.username} : {this.props.message.text} created at {moment(this.props.message.createdAt).fromNow()}
-            </ListItem>
+                <ListItem style= {{
+                flexWrap: 'wrap',
+                wordWrap: 'break-word'
+                }}
+                    //leftAvatar={<Avatar src="https://avatars1.githubusercontent.com/u/3196313?v=3&s=460" />}
+                >
+                    <span style={{width: '99%'}}>
+                        {this.props.message.username} : {this.props.message.text} created at {moment(this.props.message.createdAt).fromNow()}
+                    </span>
+                </ListItem>
         )
     }
 }

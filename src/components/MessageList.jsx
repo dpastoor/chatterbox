@@ -17,8 +17,9 @@ export default class MessageList extends React.Component {
         });
         return (
             <Card style={{
-            flexGrow: 4,
-            marginLeft: 30
+            flexGrow: 3,
+            marginLeft: 30,
+            overflowY: 'auto'
             }}>
                 <List>
                     <div style={{
